@@ -12,6 +12,9 @@ public class Main{
     static ArrayList<String> mini4=new ArrayList<String>();
     
     public static void main(String[] args){
+        main0();
+    }
+    static void main0(){
         Scanner sc = new Scanner(System.in);
         int a = 1;
         while(true){
@@ -38,7 +41,7 @@ public class Main{
             else if(a==3){
                 System.out.println("Enter to logout");
                 enterNeeded();
-                break;
+                System.exit(0);
             }
             else
             continue;
@@ -67,6 +70,7 @@ public class Main{
                         adminBlock(1);
                     }
                     else if(adchoice==3){
+                        main0();
                     }
                     else{
                         adminBlock(a1);
@@ -210,7 +214,7 @@ public class Main{
     static void penaltyCheck(String[] arr,String str){
         if(arr[1].equals("not")){
             System.out.println("ATM of different bank so penalty of Rs.50");
-            miniAppend4(50,userMiniId(str));
+            miniAppend4(50,str);
             int a=StrtoInt(arr[3]);
             a=a-50;
             String st = InttoStr(a);
@@ -221,7 +225,7 @@ public class Main{
         int ar = StrtoInt(arr[2]);
         if(ar>5){
             System.out.println("You have Exceeded the daily limits" +"\n" +"So the penalty Amount of Rs.5");
-            miniAppend4(5,userMiniId(str));
+            miniAppend4(5,str);
             int a=StrtoInt(arr[3]);
             a=a-5;
             String st = InttoStr(a);
@@ -262,7 +266,7 @@ public class Main{
         arr1[3]=InttoStr(amo1);
         arr2[3]=InttoStr(amo2);
         System.out.println("Money Transfered Successfully" +"\n" +"Enter to exit");
-        miniAppend3(temp1,userMiniId(str));
+        miniAppend3(temp1,str);
         enterNeeded();
         userActions(str);
         }
@@ -294,7 +298,7 @@ public class Main{
             showUserAmt(userId(st),st);
         }
         else if(cho==3){
-            miniStatements(userMiniId(st),st);
+            miniStatements(st);
         }
         else if(cho==4){
             moneyTransfer(userId(st),st);
@@ -306,7 +310,7 @@ public class Main{
             depositAmt(amt,st);
         }
         else if(cho==7){
-            return;
+            main0();
         }
         else{
             System.out.print("\033[H\033[2J");  
@@ -368,7 +372,7 @@ public class Main{
             
         }
         System.out.println("Amount Withdrawn Successfully");
-        miniAppend1(temp1,userMiniId(st));
+        miniAppend1(temp1,st);
         userReduce(temp1,userId(st));
         enterNeeded();
         userActions(st);
@@ -395,6 +399,7 @@ public class Main{
         int red =StrtoInt(st2[3]);
         st2[3]=InttoStr(red-a);
     }
+    //-------------------------------------------------------------------------------Gives List of Specfic iD
     static ArrayList<String> userMiniId(String st){
         ArrayList<String> list = new ArrayList<String>();
         if(st.equals("per1")){
@@ -411,16 +416,20 @@ public class Main{
         }
         return list;
     }
-    static void miniAppend1(int amt , ArrayList<String> st){
+    static void miniAppend1(int amt , String st0){
+        List<String> st = userMiniId(st0);
         st.add("You have withdrawn the Amount of " +amt);
     }
-    static void miniAppend3(int amt , ArrayList<String> st){
+    static void miniAppend3(int amt , String st0){
+        List<String> st = userMiniId(st0);
         st.add("You have transfered the Amount of " +amt);
     }
-    static void miniAppend4(int amt , ArrayList<String> st){
+    static void miniAppend4(int amt , String st0){
+        List<String> st = userMiniId(st0);
         st.add("You have got the penalty Amount of " +amt);
     }
-    static void miniAppend2(int amt,ArrayList<String> st){
+    static void miniAppend2(int amt,String st0){
+        List<String> st = userMiniId(st0);
         st.add("You have debited the Amount of " +amt);
     }
     static void depositAmt(int amt,String st){
@@ -448,7 +457,7 @@ public class Main{
             st1[3]=st2;
             System.out.println("Your Amount debited Successfully");
             enterNeeded();
-            miniAppend2(deb,userMiniId(st));
+            miniAppend2(deb,st);
             userActions(st);
         }
         else{
@@ -464,19 +473,20 @@ public class Main{
         }
         
     }
-    static void miniStatements(ArrayList<String> st,String st1){
+    static void miniStatements(String st0){
+        List<String> st = userMiniId(st0);
         int stsize = st.size();
         if(stsize==0){
             System.out.println("No mini Statements");
             enterNeeded();
-            userActions(st1);
+            userActions(st0);
         }
         else{
-        for(int i =stsize-1 ,j=0; i!=0 && j<=5 ; i--,j++){
-            System.out.println(st.get(i-1));
+        for(int i =(st.size())-1 ,j=0; i!=0 && j<=5 ; i--,j++){
+            System.out.println(st.get(i));
         }
         enterNeeded();
-        userActions(st1);
+        userActions(st0);
         }
     } 
      
